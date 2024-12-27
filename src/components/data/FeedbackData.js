@@ -2,7 +2,7 @@ const FeedbackData = [
   {
     id: 1,
     rating: 9,
-    text: "dev- lorem is the best- first topci",
+    text: "prod- lorem is the best- first topci",
   },
   {
     id: 2,
