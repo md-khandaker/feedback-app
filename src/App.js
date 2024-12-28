@@ -12,6 +12,7 @@ import AboutIconLink from "./components/AboutIconLink";
 import PostRouter from "./pages/PostRouter";
 import NavigateRouter from "./pages/NavigateRouter";
 import NotFound from "./pages/NotFound";
+import { FeedbackProvider } from "./context/FeedbackContex";
 
 function App() {
   const [feedback, setFedback] = useState(FeedbackData);
@@ -27,32 +28,34 @@ function App() {
     setFedback([newFeedback, ...feedback]);
   };
   return (
-    <Router>
-      <Header bgColor="green" textColor="red" />
-      <div className="container">
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <FeedbackForm handleAdd={addFeedback} />
-                <FeedbackStats feedback={feedback} />
-                <FeedbackList
-                  feedback={feedback}
-                  deleteFeedback={deleteFeedback}
-                />
-              </>
-            }
-          ></Route>
-          <Route path="/about" element={<About />} />
-          <Route path="/post/:id/:name" element={<PostRouter />} />
-          <Route path="/post" element={<NavigateRouter />} />
-          <Route path="/post/*" element={<NavigateRouter />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-        <AboutIconLink />
-      </div>
-    </Router>
+    <FeedbackProvider>
+      <Router>
+        <Header bgColor="green" textColor="red" />
+        <div className="container">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <FeedbackForm handleAdd={addFeedback} />
+                  <FeedbackStats feedback={feedback} />
+                  <FeedbackList
+                    feedback={feedback}
+                    deleteFeedback={deleteFeedback}
+                  />
+                </>
+              }
+            ></Route>
+            <Route path="/about" element={<About />} />
+            <Route path="/post/:id/:name" element={<PostRouter />} />
+            <Route path="/post" element={<NavigateRouter />} />
+            <Route path="/post/*" element={<NavigateRouter />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          <AboutIconLink />
+        </div>
+      </Router>
+    </FeedbackProvider>
   );
 }
 export default App;
