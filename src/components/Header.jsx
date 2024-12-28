@@ -12,7 +12,9 @@ function Header({
   };
   return (
     <header style={headerStyle}>
-      <div className="container">{text}</div>
+      <div className="container">
+        <h1>{text}</h1>
+      </div>
     </header>
   );
 }
