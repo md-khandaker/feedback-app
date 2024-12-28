@@ -6,6 +6,12 @@ import Header from "./components/Header";
 import FeedbackStats from "./components/FeedbackStats";
 import FeedbackForm from "./components/FeedbackForm";
 import { v4 as uuidv4 } from "uuid";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import About from "./pages/About";
+import AboutIconLink from "./components/AboutIconLink";
+import PostRouter from "./pages/PostRouter";
+import NavigateRouter from "./pages/NavigateRouter";
+import NotFound from "./pages/NotFound";
 
 function App() {
   const [feedback, setFedback] = useState(FeedbackData);
@@ -21,13 +27,32 @@ function App() {
     setFedback([newFeedback, ...feedback]);
   };
   return (
-    <>
-      <Header />
-      <FeedbackForm handleAdd={addFeedback} />
-      <FeedbackStats feedback={feedback} />
-      <FeedbackList feedback={feedback} handleDelete={deleteFeedback} />
-    </>
+    <Router>
+      <Header bgColor="green" textColor="red" />
+      <div className="container">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <FeedbackForm handleAdd={addFeedback} />
+                <FeedbackStats feedback={feedback} />
+                <FeedbackList
+                  feedback={feedback}
+                  deleteFeedback={deleteFeedback}
+                />
+              </>
+            }
+          ></Route>
+          <Route path="/about" element={<About />} />
+          <Route path="/post/:id/:name" element={<PostRouter />} />
+          <Route path="/post" element={<NavigateRouter />} />
+          <Route path="/post/*" element={<NavigateRouter />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+        <AboutIconLink />
+      </div>
+    </Router>
   );
 }
-
 export default App;
